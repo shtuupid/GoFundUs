@@ -96,7 +96,7 @@ const Cart = () => {
             <span role="img" aria-label="shocked">
             😱
             </span>
-            You haven't supported any chairties yet!
+            You haven't supported any Charity yet!
         </h3>
         )}
         </div>

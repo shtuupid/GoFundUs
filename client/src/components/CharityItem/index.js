@@ -33,7 +33,7 @@ function ChairtyItem(item) {
         } else {
             dispatch({
                 type: ADD_TO_CART,
-                product: { ...item, purchaseQuantity: 1 }
+                charity: { ...item, purchaseQuantity: 1 }
             });
             idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
         }

@@ -58,14 +58,14 @@ const resolvers = {
             
             const { charities } = await order.populate('charities');
             for (let i = 0; i < charities.length; i++) {
-                const product = await stripe.charities.create({
+                const charity = await stripe.charities.create({
                     name: charities[i].name,
                     description: charities[i].description,
                     images: [`${url}/images/${charities[i].image}`]
                 });
                 
                 const price = await stripe.prices.create({
-                    product: product.id,
+                    charity: charity.id,
                     unit_amount: charities[i].price * 100,
                     currency: 'gdp',
                 });
@@ -116,7 +116,7 @@ const resolvers = {
         updateProduct: async (parent, { _id, quantity }) => {
             const decrement = Math.abs(quantity) * -1;
 
-            return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+            return await Charity.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
