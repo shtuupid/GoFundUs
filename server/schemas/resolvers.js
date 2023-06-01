@@ -113,7 +113,7 @@ const resolvers = {
 
         throw new AuthenticationError('Not logged in');
         },
-        updateProduct: async (parent, { _id, quantity }) => {
+        updateCharity: async (parent, { _id, quantity }) => {
             const decrement = Math.abs(quantity) * -1;
 
             return await Charity.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });

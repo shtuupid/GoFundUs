@@ -26,7 +26,7 @@ function Detail() {
   useEffect(() => {
     // already in global store
     if (charities.length) {
-      setCurrentProduct(charities.find((charity) => charity._id === id));
+      setCurrentCharity(charities.find((charity) => charity._id === id));
     }
     // retrieved from server
     else if (data) {
@@ -107,7 +107,7 @@ function Detail() {
           />
         </div>
       ) : null}
-      {loading ? <img src={spinner} alt="loading" /> : null}
+      {loading ? <img alt="loading" /> : null}
       <Cart />
     </>
   );

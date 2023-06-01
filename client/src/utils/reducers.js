@@ -84,6 +84,6 @@ export const reducer = (state, action) => {
     }
 };
 
-export function useProductReducer(initialState) {
+export function useCharityReducer(initialState) {
     return useReducer(reducer, initialState);
 }
