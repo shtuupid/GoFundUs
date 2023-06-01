@@ -5,7 +5,7 @@ import { UPDATE_CHARITIES } from '../../utils/actions';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHARITIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
-import spinner from '../../assets/spinner.gif';
+
 
 function CharityList() {
     const [state, dispatch] = useStoreContext();
@@ -27,7 +27,7 @@ function CharityList() {
             idbPromise('charities', 'get').then((charity) => {
             dispatch({
                 type: UPDATE_CHARITIES,
-                charity: charities,
+                charity: charity,
             });
         });
     }
