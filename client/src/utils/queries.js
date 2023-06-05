@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_CHARITIES = gql`
-    query getProducts($category: ID) {
+    query getCharities($category: ID) {
         charities(category: $category) {
             _id
             name

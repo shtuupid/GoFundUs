@@ -5,7 +5,7 @@ import { UPDATE_CHARITIES } from '../../utils/actions';
 import { useQuery } from '@apollo/client';
 import { QUERY_CHARITIES } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
-import spinner from '../../assets/spinner.gif';
+
 
 function CharityList() {
     const [state, dispatch] = useStoreContext();
@@ -27,7 +27,7 @@ function CharityList() {
             idbPromise('charities', 'get').then((charity) => {
             dispatch({
                 type: UPDATE_CHARITIES,
-                charity: charities,
+                charity: charity,
             });
         });
     }
@@ -35,10 +35,10 @@ function CharityList() {
 
     function filterCharities() {
         if (!currentCategory) {
-            return state.products;
+            return state.charities;
         }
         
-        return state.products.filter(
+        return state.charities.filter(
             (charity) => charity.category._id === currentCategory
             );
         }
@@ -48,7 +48,7 @@ function CharityList() {
             <h2>Our Charities:</h2>
             {state.charities.length ? (
             <div className="flex-row">
-            {filterProducts().map((charity) => (
+            {filterCharities().map((charity) => (
                 <CharityItem
                     key={charity._id}
                     _id={charity._id}
@@ -66,4 +66,4 @@ function CharityList() {
     );
 }
 
-export default ProductList;
+export default CharityList;

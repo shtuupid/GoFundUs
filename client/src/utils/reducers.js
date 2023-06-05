@@ -22,7 +22,7 @@ export const reducer = (state, action) => {
             return {
             ...state,
             cartOpen: true,
-            cart: [...state.cart, action.product],
+            cart: [...state.cart, action.charity],
         };
 
         case ADD_MULTIPLE_TO_CART:
@@ -36,17 +36,17 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 cartOpen: true,
-                cart: state.cart.map((product) => {
-                    if (action._id === product._id) {
-                        product.purchaseQuantity = action.purchaseQuantity;
+                cart: state.cart.map((charity) => {
+                    if (action._id === charity._id) {
+                        charity.purchaseQuantity = action.purchaseQuantity;
                     }
-                    return product;
+                    return charity;
                     }),
             };
 
         case REMOVE_FROM_CART:
-        let newState = state.cart.filter((product) => {
-            return product._id !== action._id;
+        let newState = state.cart.filter((charity) => {
+            return charity._id !== action._id;
         });
         return {
             ...state,
@@ -84,6 +84,6 @@ export const reducer = (state, action) => {
     }
 };
 
-export function useProductReducer(initialState) {
+export function useCharityReducer(initialState) {
     return useReducer(reducer, initialState);
 }

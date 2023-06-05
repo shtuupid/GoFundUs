@@ -5,7 +5,7 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-function ChairtyItem(item) {
+function CharityItem(item) {
     const [state, dispatch] = useStoreContext();
 
     const {
@@ -33,7 +33,7 @@ function ChairtyItem(item) {
         } else {
             dispatch({
                 type: ADD_TO_CART,
-                product: { ...item, purchaseQuantity: 1 }
+                charity: { ...item, purchaseQuantity: 1 }
             });
             idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
         }
