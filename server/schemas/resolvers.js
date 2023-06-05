@@ -23,7 +23,7 @@ const resolvers = {
 
         return await Charity.find(params).populate('category');
         },
-        Charity: async (parent, { _id }) => {
+        charity: async (parent, { _id }) => {
         return await Charity.findById(_id).populate('category');
         },
         user: async (parent, args, context) => {

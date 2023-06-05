@@ -27,7 +27,7 @@ function CharityList() {
             idbPromise('charities', 'get').then((charity) => {
             dispatch({
                 type: UPDATE_CHARITIES,
-                charity: charity,
+                charities: charity,
             });
         });
     }
