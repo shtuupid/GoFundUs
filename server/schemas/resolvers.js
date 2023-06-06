@@ -57,7 +57,8 @@ const resolvers = {
             const line_items = [];
             
             const { charities } = await order.populate('charities');
-            for (let i = 0; i < charities.length; i++) {
+            for (let i = 0; i < charities.length; i++) {   
+                console.log("this is a test", i, charities.length)
                 const charity = await stripe.charities.create({
                     name: charities[i].name,
                     description: charities[i].description,
@@ -67,7 +68,7 @@ const resolvers = {
                 const price = await stripe.prices.create({
                     charity: charity.id,
                     unit_amount: charities[i].price * 100,
-                    currency: 'gdp',
+                    currency: 'gbp',
                 });
 
                 line_items.push({
