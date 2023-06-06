@@ -16,7 +16,7 @@ const Cart = () => {
     const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
     useEffect(() => {
-        if (data) {
+        if (data) { 
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: data.checkout.session });
             });
