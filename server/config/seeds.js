@@ -7,8 +7,8 @@ db.once('open', async () => {
     const categories = await Category.insertMany([
         { name: 'Africa' },
         { name: 'Asia' },
-        { name: 'Middle East' },
         { name: 'Europe' },
+        { name: 'Middle East' },
         { name: 'America' }
     ]);
 
