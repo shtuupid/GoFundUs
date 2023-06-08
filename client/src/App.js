@@ -8,6 +8,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+import Landing from './pages/Landing';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
@@ -45,8 +46,12 @@ const App = () => {
           <StoreProvider>
             <Nav />
             <Routes>
+              <Route
+                path="/"
+                element={<Landing />}
+              />
               <Route 
-                path="/" 
+                path="/home" 
                 element={<Home />} 
               />
               <Route 
