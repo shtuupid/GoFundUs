@@ -1,54 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
-import Cart from "../components/Cart";
-import { useStoreContext } from "../utils/GlobalState";
+import Cart from '../components/Cart';
+import { useStoreContext } from '../utils/GlobalState';
 import {
   REMOVE_FROM_CART,
   UPDATE_CART_QUANTITY,
   ADD_TO_CART,
-  UPDATE_CHARITIES,
-} from "../utils/actions";
-import { QUERY_CHARITIES } from "../utils/queries";
-import { idbPromise } from "../utils/helpers";
+  UPDATE_PRODUCTS,
+} from '../utils/actions';
+import { QUERY_PRODUCTS } from '../utils/queries';
+import { idbPromise } from '../utils/helpers';
+import spinner from '../assets/spinner.gif';
 
 function Detail() {
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
-  const [currentCharity, setCurrentCharity] = useState({});
+  const [currentProduct, setCurrentProduct] = useState({});
 
-  const { loading, data } = useQuery(QUERY_CHARITIES);
+  const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const { charities, cart } = state;
+  const { products, cart } = state;
 
   useEffect(() => {
     // already in global store
-    if (charities.length) {
-      setCurrentCharity(charities.find((charity) => charity._id === id));
+    if (products.length) {
+      setCurrentProduct(products.find((product) => product._id === id));
     }
     // retrieved from server
     else if (data) {
       dispatch({
-        type: UPDATE_CHARITIES,
-        charities: data.charities,
+        type: UPDATE_PRODUCTS,
+        products: data.products,
       });
 
-      data.charities.forEach((charity) => {
-        idbPromise("charities", "put", charity);
+      data.products.forEach((product) => {
+        idbPromise('products', 'put', product);
       });
     }
     // get cache from idb
     else if (!loading) {
-      idbPromise("charities", "get").then((indexedCharities) => {
+      idbPromise('products', 'get').then((indexedProducts) => {
         dispatch({
-          type: UPDATE_CHARITIES,
-          charities: indexedCharities,
+          type: UPDATE_PRODUCTS,
+          products: indexedProducts,
         });
       });
     }
-  }, [charities, data, loading, dispatch, id]);
+  }, [products, data, loading, dispatch, id]);
 
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === id);
@@ -58,43 +59,43 @@ function Detail() {
         _id: id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
-      idbPromise("cart", "put", {
+      idbPromise('cart', 'put', {
         ...itemInCart,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
     } else {
       dispatch({
         type: ADD_TO_CART,
-        charity: { ...currentCharity, purchaseQuantity: 1 },
+        product: { ...currentProduct, purchaseQuantity: 1 },
       });
-      idbPromise("cart", "put", { ...currentCharity, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
     }
   };
 
   const removeFromCart = () => {
     dispatch({
       type: REMOVE_FROM_CART,
-      _id: currentCharity._id,
+      _id: currentProduct._id,
     });
 
-    idbPromise("cart", "delete", { ...currentCharity });
+    idbPromise('cart', 'delete', { ...currentProduct });
   };
 
   return (
     <>
-      {currentCharity && cart ? (
+      {currentProduct && cart ? (
         <div className="container my-1">
-          <Link to="/">← Back to Charity page</Link>
+          <Link to="/">← Back to Products</Link>
 
-          <h2>{currentCharity.name}</h2>
+          <h2>{currentProduct.name}</h2>
 
-          <p>{currentCharity.description}</p>
+          <p>{currentProduct.description}</p>
 
           <p>
-            <strong>Price:</strong>${currentCharity.price}{" "}
+            <strong>Price:</strong>${currentProduct.price}{' '}
             <button onClick={addToCart}>Add to Cart</button>
             <button
-              disabled={!cart.find((p) => p._id === currentCharity._id)}
+              disabled={!cart.find((p) => p._id === currentProduct._id)}
               onClick={removeFromCart}
             >
               Remove from Cart
@@ -102,12 +103,12 @@ function Detail() {
           </p>
 
           <img
-            src={`/images/${currentCharity.image}`}
-            alt={currentCharity.name}
+            src={`/images/${currentProduct.image}`}
+            alt={currentProduct.name}
           />
         </div>
       ) : null}
-      {loading ? <img alt="loading" /> : null}
+      {loading ? <img src={spinner} alt="loading" /> : null}
       <Cart />
     </>
   );

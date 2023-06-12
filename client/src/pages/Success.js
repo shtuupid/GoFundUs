@@ -10,13 +10,13 @@ function Success() {
   useEffect(() => {
     async function saveOrder() {
       const cart = await idbPromise('cart', 'get');
-      const charities = cart.map((item) => item._id);
+      const products = cart.map((item) => item._id);
 
-      if (charities.length) {
-        const { data } = await addOrder({ variables: { charities } });
-        const charityData = data.addOrder.charities;
+      if (products.length) {
+        const { data } = await addOrder({ variables: { products } });
+        const productData = data.addOrder.products;
 
-        charityData.forEach((item) => {
+        productData.forEach((item) => {
           idbPromise('cart', 'delete', item);
         });
       }
@@ -33,7 +33,7 @@ function Success() {
     <div>
       <Jumbotron>
         <h1>Success!</h1>
-        <h2>Thank you for your donation!</h2>
+        <h2>Thank you for your purchase!</h2>
         <h2>You will now be redirected to the home page</h2>
       </Jumbotron>
     </div>

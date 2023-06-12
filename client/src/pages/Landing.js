@@ -3,9 +3,11 @@ import React from "react";
 
 const Landing = () => {
     return (
-      <div className="container">
-        <Link to="/home"> Fund Charities </Link>
-
+      
+      <div>
+          <center>
+            <Link to="/home"> Fund Charities </Link>
+            </center>
       </div>
     );
   };
