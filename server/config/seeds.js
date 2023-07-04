@@ -1,5 +1,5 @@
 const db = require('./connection');
-const { User, Charity, Category } = require('../models');
+const { User, Charity, Category, Product } = require('../models');
 
 db.once('open', async () => {
     await Category.deleteMany();
@@ -7,16 +7,16 @@ db.once('open', async () => {
     const categories = await Category.insertMany([
         { name: 'Africa' },
         { name: 'Asia' },
-        { name: 'Middle East' },
         { name: 'Europe' },
+        { name: 'Middle East' },
         { name: 'America' }
     ]);
 
     console.log('categories seeded');
 
-    await Charity.deleteMany();
+    await Product.deleteMany();
 
-    const charities = await Charity.insertMany([
+    const charities = await Product.insertMany([
         {
             name: 'Ugandan Orphans',
             description:
